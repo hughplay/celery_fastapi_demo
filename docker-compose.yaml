@@ -29,7 +29,7 @@ services:
       - CELERY_RESULT_BACKEND=rpc://
     volumes:
       - ./services/add:/worker
-    command: celery -A worker worker --loglevel=info -Q queue_add
+    command: celery -A worker worker --loglevel=info -Q queue_add --concurrency=2
 
   worker_multiply:
     build:
@@ -42,7 +42,7 @@ services:
       - CELERY_RESULT_BACKEND=rpc://
     volumes:
       - ./services/multiply:/worker
-    command: celery -A worker worker --loglevel=info -Q queue_multiply
+    command: celery -A worker worker --loglevel=info -Q queue_multiply --concurrency=4
 
   rabbitmq:
     image: "rabbitmq:3-management"
